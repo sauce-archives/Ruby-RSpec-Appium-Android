@@ -31,15 +31,20 @@ RSpec.configure do |config|
   end
 
   config.after(:each) do |example|
-    @driver.driver_quit
+    url = "https://#{ENV['TESTOBJECT_API_KEY']}:#{'blank'}@app.testobject.com/api/rest/v1/appium/session/#{@sessionid}/test"
 
-    # TODO: use Test Object reporting
-    if example.exception
-    #  Report test failed
-    else
-    #  Report test passed
+    call = {url: url,
+            method: :put,
+            verify_ssl: false,
+            payload: JSON.generate(passed: !example.exception),
+            headers: {'Content-Type' => 'application/json',
+                      'Accept' => 'application/json'}
+    }
+    RestClient::Request.execute(call) do |response, request, result|
+      raise unless response.code == 200 || response.code == 201
     end
 
+    @driver.driver_quit
   end
 
 end
