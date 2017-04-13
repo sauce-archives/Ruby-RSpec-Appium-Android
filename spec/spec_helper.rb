@@ -5,8 +5,6 @@ require "sauce_whisk"
 require "selenium-webdriver"
 require "require_all"
 
-require_rel "../pages"
-
 # TODO - remove extension with this code is merged:
 # https://github.com/appium/ruby_lib/pull/538
 require_rel "../extensions"
@@ -14,11 +12,10 @@ require_rel "../extensions"
 Selenium::WebDriver.logger.level = :info
 
 RSpec.configure do |config|
-
   config.before(:each) do |example|
     caps = {
         testobject_api_key: ENV['TESTOBJECT_API_KEY'],
-        testobject_device: 'LG_Nexus_4_E960_real',
+        testobject_device: 'Samsung_Galaxy_S6_POC06',
         testobject_test_name: example.full_description
     }
 
@@ -40,8 +37,10 @@ RSpec.configure do |config|
             headers: {'Content-Type' => 'application/json',
                       'Accept' => 'application/json'}
     }
+
+    puts !example.exception
     RestClient::Request.execute(call) do |response, request, result|
-      raise unless response.code == 200 || response.code == 201
+      #raise unless response.code == 200 || response.code == 201
     end
 
     @driver.driver_quit
