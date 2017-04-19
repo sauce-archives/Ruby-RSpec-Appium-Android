@@ -7,10 +7,6 @@ require "require_all"
 
 require_rel "../pages"
 
-# TODO - remove extension with this code is merged:
-# https://github.com/appium/ruby_lib/pull/538
-require_rel "../extensions"
-
 Selenium::WebDriver.logger.level = :info
 
 RSpec.configure do |config|
