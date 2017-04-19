@@ -7,12 +7,6 @@ require "require_all"
 
 require_rel "../pages"
 
-# TODO - remove extension with this code is merged:
-# https://github.com/appium/ruby_lib/pull/538
-require_rel "../extensions"
-
-Selenium::WebDriver.logger.level = :info
-
 RSpec.configure do |config|
 
   config.before(:each) do |example|
@@ -41,7 +35,9 @@ RSpec.configure do |config|
                       'Accept' => 'application/json'}
     }
     RestClient::Request.execute(call) do |response, request, result|
-      raise unless response.code == 200 || response.code == 201
+      # FIXME - Uncomment line once Test Object bug is resolved
+      #raise unless response.code == 200 || response.code == 201
+      puts response.code == 200 ? "PASSED" : "FAILED"
     end
 
     @driver.driver_quit
