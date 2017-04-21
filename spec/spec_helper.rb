@@ -25,7 +25,7 @@ RSpec.configure do |config|
   end
 
   config.after(:each) do |example|
-    url = "https://#{ENV['TESTOBJECT_API_KEY']}:#{'blank'}@app.testobject.com/api/rest/v1/appium/session/#{@sessionid}/test"
+    url = "https://app.testobject.com/api/rest/v1/appium/session/#{@sessionid}/test"
 
     call = {url: url,
             method: :put,
@@ -35,9 +35,8 @@ RSpec.configure do |config|
                       'Accept' => 'application/json'}
     }
     RestClient::Request.execute(call) do |response, request, result|
-      # FIXME - Uncomment line once Test Object bug is resolved
-      #raise unless response.code == 200 || response.code == 201
-      puts response.code == 200 ? "PASSED" : "FAILED"
+      return if response.code == 204
+      raise StandardError, "TestObject API Call Unsuccessful with: #{response.code}: #{result}"
     end
 
     @driver.driver_quit
