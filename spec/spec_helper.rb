@@ -16,7 +16,7 @@ RSpec.configure do |config|
         testobject_test_name: example.full_description
     }
 
-    appium_lib = {server_url: 'http://appium.testobject.com/wd/hub'}
+    appium_lib = {server_url: 'http://us1.appium.testobject.com/wd/hub'}
 
     @driver = Appium::Driver.new(caps: caps, appium_lib: appium_lib)
 
@@ -35,8 +35,7 @@ RSpec.configure do |config|
                       'Accept' => 'application/json'}
     }
     RestClient::Request.execute(call) do |response, request, result|
-      # FIXME - Uncomment line once Test Object bug is resolved
-      #raise unless response.code == 200 || response.code == 201
+      raise unless response.code == 200 || response.code == 201
       puts response.code == 200 ? "PASSED" : "FAILED"
     end
 
