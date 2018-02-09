@@ -12,11 +12,11 @@ RSpec.configure do |config|
   config.before(:each) do |example|
     caps = {
         testobject_api_key: ENV['TESTOBJECT_API_KEY'],
-        testobject_device: 'LG_Nexus_4_E960_real',
+        deviceName: 'Android',
         testobject_test_name: example.full_description
     }
 
-    appium_lib = {server_url: 'http://us1.appium.testobject.com/wd/hub'}
+    appium_lib = {server_url: 'https://us1.appium.testobject.com/wd/hub'}
 
     @driver = Appium::Driver.new(caps: caps, appium_lib: appium_lib)
 
