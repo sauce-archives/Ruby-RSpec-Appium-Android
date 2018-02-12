@@ -23,6 +23,8 @@ This code is provided on an "AS-IS” basis without warranty of any kind, either
     * Add your TestObject API Key:
     ```
     $ export TESTOBJECT_API_KEY=<your project's api key>
+    $ export APPIUM_URL=<your project's api key>
+        
     ```
 
 3. Project Dependencies
