@@ -8,9 +8,9 @@ task :default => :spec
 
 @success = true
 
-desc "Run Tests on Samsung S6 Device"
+desc "Run Tests on Android"
 task :test_android_device do
-  ENV['deviceName'] = 'Samsung_Galaxy_S6_POC06'
+  ENV['platformName'] = 'Android'
   ENV['JUNIT_DIR'] = 'junit_reports/android_device'
 
   Rake::Task[:run_rspec].execute
